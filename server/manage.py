@@ -5,6 +5,9 @@ import sys
 
 # new comment
 
+
+# 2nd new comment
+
 def main():
     """Run administrative tasks."""
     os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'djangobackend.settings')

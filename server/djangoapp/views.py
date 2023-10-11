@@ -76,7 +76,7 @@ def logout_request(request):
 def get_dealerships(request):
     if request.method == "GET":
         context = {}
-        url = "https://eu-gb.functions.appdomain.cloud/api/v1/web/vmythili2011%40gmail.com_dev/bestcarsdealership/get-dealerships--011222"
+        url = "https://ksundararaja-3000.theiadocker-1-labs-prod-theiak8s-4-tor01.proxy.cognitiveclass.ai/dealerships/get"
         dealerships = get_dealers_from_cf(url)
         context["dealership_list"] = dealerships
         return render(request, 'djangoapp/index.html', context)
@@ -85,11 +85,11 @@ def get_dealerships(request):
 def get_dealer_details(request, id):
     if request.method == "GET":
         context = {}
-        dealer_url = "https://eu-gb.functions.appdomain.cloud/api/v1/web/vmythili2011%40gmail.com_dev/bestcarsdealership/get-dealerships--011222"
+        dealer_url = "https://ksundararaja-3000.theiadocker-1-labs-prod-theiak8s-4-tor01.proxy.cognitiveclass.ai/dealerships/get"
         dealer = get_dealer_by_id_from_cf(dealer_url, id=id)
         context["dealer"] = dealer
     
-        review_url = "https://eu-gb.functions.appdomain.cloud/api/v1/web/vmythili2011%40gmail.com_dev/bestcarsdealership/get_reviews-new111022"
+        review_url = "https://ksundararaja-5000.theiadocker-1-labs-prod-theiak8s-4-tor01.proxy.cognitiveclass.ai/api/get_reviews"
         reviews = get_dealer_reviews_from_cf(review_url, id=id)
         print(reviews)
         context["reviews"] = reviews
@@ -99,7 +99,7 @@ def get_dealer_details(request, id):
 
 def add_review(request, id):
     context = {}
-    dealer_url = "https://eu-gb.functions.appdomain.cloud/api/v1/web/vmythili2011%40gmail.com_dev/bestcarsdealership/get-dealerships--011222"
+    dealer_url = "https://ksundararaja-3000.theiadocker-1-labs-prod-theiak8s-4-tor01.proxy.cognitiveclass.ai/dealerships/get"
     dealer = get_dealer_by_id_from_cf(dealer_url, id=id)
     context["dealer"] = dealer
     if request.method == 'GET':
@@ -132,6 +132,6 @@ def add_review(request, id):
 
             new_payload = {}
             new_payload["review"] = payload
-            review_post_url = "https://eu-gb.functions.appdomain.cloud/api/v1/web/vmythili2011%40gmail.com_dev/bestcarsdealership/post-reviews--091122"
+            review_post_url = "https://ksundararaja-5000.theiadocker-1-labs-prod-theiak8s-4-tor01.proxy.cognitiveclass.ai/api/post_review"
             post_request(review_post_url, new_payload, id=id)
         return redirect("djangoapp:dealer_details", id=id)

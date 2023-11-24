@@ -7,8 +7,8 @@ const Cloudant = require('@cloudant/cloudant');
 async function dbCloudantConnect() {
     try {
         const cloudant = Cloudant({
-            plugins: { iamauth: { iamApiKey: 'DFfBhypEblDkKXFz5TFmp-2RcQby-wAvqWphtL0nz5rG' } }, // Replace with your IAM API key
-            url: 'https://8ff26903-8a9d-46d9-9a66-bee9b4b14de9-bluemix.cloudantnosqldb.appdomain.cloud', // Replace with your Cloudant URL
+            plugins: { iamauth: { iamApiKey: '9SQFN-Rcvs5tyxMxFQ45h-YH-hSRVt1W439_pV052fis' } }, // Replace with your IAM API key
+            url: 'https://7c2f11c2-7a0f-4fe2-ba2f-f1b6fb4cef82-bluemix.cloudantnosqldb.appdomain.cloud', // Replace with your Cloudant URL
         });
 
         const db = cloudant.use('dealerships');
@@ -34,11 +34,10 @@ app.get('/dealerships/get', (req, res) => {
 
     // Create a selector object based on query parameters
     const selector = {};
-
     if (state) {
         selector.state = state;
     }
-
+    
     if (id) {
         selector.id = parseInt(id); // Filter by "id" with a value of 1
     }

@@ -2,22 +2,20 @@ from cloudant.client import Cloudant
 from cloudant.query import Query
 from flask import Flask, jsonify, request
 import atexit
+import json
 
-
-cloudant_username = '8ff26903-8a9d-46d9-9a66-bee9b4b14de9-bluemix'
-cloudant_api_key = 'DFfBhypEblDkKXFz5TFmp-2RcQby-wAvqWphtL0nz5rG'
-cloudant_url = 'https://8ff26903-8a9d-46d9-9a66-bee9b4b14de9-bluemix.cloudantnosqldb.appdomain.cloud'
+#Add your Cloudant service credentials here
+cloudant_username = '7c2f11c2-7a0f-4fe2-ba2f-f1b6fb4cef82-bluemix'
+cloudant_api_key = '9SQFN-Rcvs5tyxMxFQ45h-YH-hSRVt1W439_pV052fis'
+cloudant_url = 'https://7c2f11c2-7a0f-4fe2-ba2f-f1b6fb4cef82-bluemix.cloudantnosqldb.appdomain.cloud'
 client = Cloudant.iam(cloudant_username, cloudant_api_key, connect=True, url=cloudant_url)
 
 session = client.session()
-# print('Username:', session['userCtx']['name'])
 print('Databases:', client.all_dbs())
 
 db = client['reviews']
 
 app = Flask(__name__)
-
-
 
 @app.route('/api/get_reviews', methods=['GET'])
 def get_reviews():
@@ -67,6 +65,13 @@ def post_review():
             abort(400, description=f'Missing required field: {field}')
 
     # Save the review data as a new document in the Cloudant database
+    print("review--------->", review_data)
+    # Ensure review_data is a dictionary
+    if not isinstance(review_data, dict):
+        review_data = json.loads(review_data)  # Parse string as JSON
+        if not isinstance(review_data, dict):
+            abort(400, description='Invalid JSON data')
+
     db.create_document(review_data)
 
     return jsonify({"message": "Review posted successfully"}), 201
